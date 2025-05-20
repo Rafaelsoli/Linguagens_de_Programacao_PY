@@ -1,4 +1,4 @@
-# ![Ícone](https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/31/Enchanting_Table.gif/revision/latest/scale-to-width/40?cb=20220222115558) Relatório do TP01-AEDs3
+# ![Ícone](https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/31/Enchanting_Table.gif/revision/latest/scale-to-width/40?cb=20220222115558) Linguagens de Programação Seminário PYTHON
 
 > 🧠 **Linguagens de Programação** — Seminário PYTHON
 
