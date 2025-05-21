@@ -8,7 +8,7 @@ def iniciar ():
 
 def atualizar (tela):
     global pos_circulo
-    azul = (50, 150, 255)
+    azul = (50, pos_circulo % 225, 255)
     pygame.draw.circle (tela, azul, (pos_circulo, 300), 40)
     pos_circulo += 2
     if pos_circulo > 800:
