@@ -20,6 +20,8 @@ def texto (conteudo, cor, tamanho, fonte, x, y, alinhamento, tela):
         ret.bottomright = (x, y)
     elif alinhamento == "baixo_esquerda":
         ret.bottomleft = (x, y)
+    elif alinhamento == "esquerda":
+        ret.midleft = (x, y)
     else:
         ret.topleft = (x, y)  # padrão
 

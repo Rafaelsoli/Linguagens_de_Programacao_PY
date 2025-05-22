@@ -1,59 +1,39 @@
 import os
 import pygame
+from slides.modulos.texto import texto  # <- ajuste conforme onde você salvou sua função
+from slides.modulos.estilo import FUNDO_BRANCO, desenhar_logo
 
-# --- Configurações do conteúdo ------------------------------------------------
-TITULO = "Título do Slide"
-CORPO  = (
-    "Corpo do slide – escreva o quanto quiser.\n"
-    "Use \\n para quebrar linhas.\n"
-    "Vale misturar maiúsculas, negrito, etc."
-)
+# Caminho da logo (pasta imagens ao lado do main.py)
 LOGO_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "imagens", "logo.png")
 
-
-# --- Cores --------------------------------------------------------------------
 BRANCO = (255, 255, 255)
-PRETO  = (0, 0, 0)
+PRETO = (0, 0, 0)
 
-# --- Variáveis de estado internas --------------------------------------------
-fonte_titulo = fonte_corpo = None
+# Conteúdo do slide
+TITULO = "Slide 4 - Exemplo com função texto"
+CORPO = [
+    "Este slide demonstra como usar",
+    "uma função padrão para desenhar texto.",
+    "",
+    "Use as setas ← e → para navegar."
+]
+
 logo_surface = None
 
-# ------------------------------------------------------------------------------
 def iniciar():
-    """Chamado uma vez quando o slide entra na tela."""
-    global fonte_titulo, fonte_corpo, logo_surface
+    pass  # Nenhuma inicialização necessária agora
 
-    pygame.font.init()
-    # Troque a fonte/tamanho se preferir
-    fonte_titulo = pygame.font.SysFont(None, 64, bold=True)
-    fonte_corpo  = pygame.font.SysFont(None, 32)
-    logo_surface = pygame.image.load(LOGO_PATH).convert_alpha()
-
-# ------------------------------------------------------------------------------
 def atualizar(tela):
-    """Chamado a cada quadro para desenhar o slide."""
-    tela.fill(BRANCO)
+    tela.fill(FUNDO_BRANCO)
 
-    # --- Logo no canto superior direito
-    logo_rect = logo_surface.get_rect()
-    logo_rect.topright = (tela.get_width() - 20, 20)
-    tela.blit(logo_surface, logo_rect)
+    desenhar_logo(tela)
 
-    # --- Título centralizado
-    titulo_surf = fonte_titulo.render(TITULO, True, PRETO)
-    titulo_rect = titulo_surf.get_rect(center=(tela.get_width() // 2, 120))
-    tela.blit(titulo_surf, titulo_rect)
+    texto(TITULO, "black", 48, None, tela.get_width() // 2, 100, "centro", tela)
 
-    # --- Corpo (quebra de linha automática)
-    y = 200
-    for linha in CORPO.split("\n"):
-        corpo_surf = fonte_corpo.render(linha, True, PRETO)
-        corpo_rect = corpo_surf.get_rect(center=(tela.get_width() // 2, y))
-        tela.blit(corpo_surf, corpo_rect)
-        y += fonte_corpo.get_height() + 10
+    y = 180
+    for linha in CORPO:
+        texto(linha, "black", 28, None, tela.get_width() // 2, y, "centro", tela)
+        y += 40
 
-# ------------------------------------------------------------------------------
 def evento(evento):
-    """Receba e trate eventos se precisar (ex.: teclas para avançar)."""
     pass
