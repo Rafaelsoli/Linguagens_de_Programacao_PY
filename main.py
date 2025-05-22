@@ -1,6 +1,6 @@
-import os
 import importlib
 import pygame
+import os
 
 pygame.init ()
 
