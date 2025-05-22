@@ -16,4 +16,6 @@ def atualizar (tela):
 
     texto ("Exemplo em itálico", "#FFFF64", 28, "consolas", largura - 280, altura - 60, "top_esquerda", tela)
 
+    texto ("Bom dia!", "#ABCDEF", 37, "arial", 0, 200, "baixo_direita", tela)
+
 
