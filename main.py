@@ -51,15 +51,37 @@ def transicaoNenhuma (novo_indice):
         slides[indice_slide].iniciar ()
 
 def animarTransicao (slide_antigo, slide_novo, direcao):
-    for deslocamento in range (0, largura + 1, 40):
+    if direcao in ["direita", "esquerda"]:
+        max_deslocamento = largura
+    else:
+        max_deslocamento = altura
+
+    for deslocamento in range (0, max_deslocamento + 1, 40):
         tela.fill ((30, 30, 30))
 
         if direcao == "direita":
-            pos_antigo = - deslocamento
-            pos_novo = largura - deslocamento
-        else:
-            pos_antigo = deslocamento
-            pos_novo = - largura + deslocamento
+            x_antigo = - deslocamento
+            y_antigo = 0
+            x_novo = largura - deslocamento
+            y_novo = 0
+
+        elif direcao == "esquerda":
+            x_antigo = deslocamento
+            y_antigo = 0
+            x_novo = - largura + deslocamento
+            y_novo = 0
+
+        elif direcao == "acima":
+            x_antigo = 0
+            y_antigo = deslocamento
+            x_novo = 0
+            y_novo = - altura + deslocamento
+
+        elif direcao == "abaixo":
+            x_antigo = 0
+            y_antigo = - deslocamento
+            x_novo = 0
+            y_novo = altura - deslocamento
 
         superficie_antiga = pygame.Surface ((largura, altura))
         superficie_nova = pygame.Surface ((largura, altura))
@@ -67,11 +89,12 @@ def animarTransicao (slide_antigo, slide_novo, direcao):
         slide_antigo.atualizar (superficie_antiga)
         slide_novo.atualizar (superficie_nova)
 
-        tela.blit (superficie_antiga, (pos_antigo, 0))
-        tela.blit (superficie_nova, (pos_novo, 0))
+        tela.blit (superficie_antiga, (x_antigo, y_antigo))
+        tela.blit (superficie_nova, (x_novo, y_novo))
 
         pygame.display.flip ()
         relogio.tick (60)
+
 
 def transicaoArrastar (novo_indice):
     global indice_slide
@@ -85,7 +108,20 @@ def transicaoArrastar (novo_indice):
     slides[novo_indice].iniciar ()
     animarTransicao (slide_antigo, slides[novo_indice], direcao)
     indice_slide = novo_indice
-    
+
+def transicaoSwipe (novo_indice):
+    global indice_slide
+
+    if novo_indice < 0 or novo_indice >= len (slides):
+        return
+
+    direcao = "abaixo" if novo_indice > indice_slide else "acima"
+
+    slide_antigo = slides[indice_slide]
+    slides[novo_indice].iniciar ()
+    animarTransicao (slide_antigo, slides[novo_indice], direcao)
+    indice_slide = novo_indice
+
 
 if slides:
     slides[indice_slide].iniciar ()
