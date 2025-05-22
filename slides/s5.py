@@ -1,5 +1,6 @@
 import pygame
-from slides.modulos.texto import texto
+from slides.modulos.texto  import texto
+from slides.modulos.imagem import imagem
 
 def iniciar ():
     pass
@@ -16,6 +17,8 @@ def atualizar (tela):
 
     texto ("Exemplo em itálico", "#FFFF64", 28, "consolas", largura - 280, altura - 60, "top_esquerda", tela)
 
-    texto ("Bom dia!", "#ABCDEF", 37, "arial", 0, 200, "baixo_direita", tela)
+    texto ("Bom dia!", "#ABCDEF", 37, "arial", 0, 0, "top_esquerda", tela)
+
+    imagem ("bola.png", -70, 1.2*altura, "baixo_esquerda", tela, (largura/2, altura/2))
 
 

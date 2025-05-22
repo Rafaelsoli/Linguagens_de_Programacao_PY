@@ -15,10 +15,10 @@ CORPO = [
     "Este slide demonstra como usar",
     "uma função padrão para desenhar texto.",
     "",
-    "Use as setas ← e → para navegar."
+    "Use as setas '<' e '>' para navegar."
 ]
 
-logo_surface = None
+logo_surface = None 
 
 def iniciar():
     pass  # Nenhuma inicialização necessária agora
@@ -28,11 +28,11 @@ def atualizar(tela):
 
     desenhar_logo(tela)
 
-    texto(TITULO, "black", 48, None, tela.get_width() // 2, 100, "centro", tela)
+    texto(TITULO, "black", 48, None, tela.get_width() // 8, 100, "top_esquerda", tela)
 
     y = 180
     for linha in CORPO:
-        texto(linha, "black", 28, None, tela.get_width() // 2, y, "centro", tela)
+        texto(linha, "black", 28, None, tela.get_width() // 8, y, "top_esquerda", tela)
         y += 40
 
 def evento(evento):

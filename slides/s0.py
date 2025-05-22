@@ -9,6 +9,7 @@ def iniciar ():
 
 def atualizar (tela):
     global pos_circulo
+    tela.fill ((25, 25, 25))
     azul = (50, pos_circulo % 225, 255)
     pygame.draw.circle (tela, azul, (pos_circulo, 300), 40)
     pos_circulo += 2
