@@ -8,6 +8,8 @@ largura_coluna = 20
 altura_linha = 20
 caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
+# BUG: O SLIDE MORRE SE REDIMENSIONADO AQUI
+
 def iniciar():
     global colunas, velocidades
     colunas.clear()
