@@ -1,28 +1,51 @@
 import pygame
 
-# Função de geração de texto
-def texto (conteudo, cor, tamanho, fonte, x, y, alinhamento, tela):
-    fonte_pygame = pygame.font.SysFont (fonte, tamanho)
-
+# Função de geração de texto (com suporte a lista, itálico, negrito, sublinhado e espaçamento)
+def texto (
+    conteudo,
+    cor,
+    tamanho,
+    fonte,
+    x,
+    y,
+    alinhamento,
+    tela,
+    negrito = False,
+    italico = False,
+    sublinhado = False,
+    espacamento = None
+):
     if isinstance (cor, str):
         cor = pygame.Color (cor)
 
-    superficie = fonte_pygame.render (conteudo, True, cor)
-    ret = superficie.get_rect ()
+    fonte_pygame = pygame.font.SysFont (fonte, tamanho, bold = negrito, italic = italico)
+    fonte_pygame.set_underline (sublinhado)
 
-    if alinhamento == "centro":
-        ret.center = (x, y)
-    elif alinhamento == "top_esquerda":
-        ret.topleft = (x, y)
-    elif alinhamento == "top_direita":
-        ret.topright = (x, y)
-    elif alinhamento == "baixo_direita":
-        ret.bottomright = (x, y)
-    elif alinhamento == "baixo_esquerda":
-        ret.bottomleft = (x, y)
-    elif alinhamento == "esquerda":
-        ret.midleft = (x, y)
-    else:
-        ret.topleft = (x, y)  # padrão
+    if isinstance (conteudo, str):
+        conteudo = [conteudo]
 
-    tela.blit (superficie, ret)
+    if espacamento is None:
+        espacamento = tamanho
+
+    for i in range (len (conteudo)):
+        superficie = fonte_pygame.render (conteudo[i], True, cor)
+        ret = superficie.get_rect ()
+
+        y_linha = y + i * espacamento
+
+        if alinhamento == "centro":
+            ret.center = (x, y_linha)
+        elif alinhamento == "top_esquerda":
+            ret.topleft = (x, y_linha)
+        elif alinhamento == "top_direita":
+            ret.topright = (x, y_linha)
+        elif alinhamento == "baixo_direita":
+            ret.bottomright = (x, y_linha)
+        elif alinhamento == "baixo_esquerda":
+            ret.bottomleft = (x, y_linha)
+        elif alinhamento == "esquerda":
+            ret.midleft = (x, y_linha)
+        else:
+            ret.topleft = (x, y_linha)
+
+        tela.blit (superficie, ret)
