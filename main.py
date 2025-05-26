@@ -2,6 +2,8 @@ import importlib
 import pygame
 import os
 
+from slides.modulos.texto  import texto
+
 pygame.init ()
 
 largura, altura = 800, 600
@@ -146,6 +148,7 @@ while executando:
                 else:
                     tela = pygame.display.set_mode ((largura, altura), pygame.RESIZABLE)
 
+
         if slides:
             slides[indice_slide].evento (evento)
 
@@ -153,6 +156,16 @@ while executando:
 
     if slides:
         slides[indice_slide].atualizar (tela)
+
+        if not isinstance (slides[indice_slide], SlideFinal):
+            texto ( # Indice no slide
+                f"{indice_slide + 1}", 
+                "#FFFFFF", 24, "arial", largura - 10, altura - 10, "baixo_direita", tela,
+                negrito=True,
+                grossura_contorno=3,
+                cor_contorno="#000000"
+            )
+
 
     pygame.display.flip ()
     relogio.tick (60)

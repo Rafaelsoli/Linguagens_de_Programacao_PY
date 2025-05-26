@@ -99,7 +99,6 @@ def atualizar (tela):
     y_t2 = y0_q2 + di_p2
     t_t2 = int ((largura if largura < altura else altura)/30)
 
-    print (t_t2)
     texto (
         [
             "• Destaca-se no mercado", 

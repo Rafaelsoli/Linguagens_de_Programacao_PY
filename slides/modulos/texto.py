@@ -1,6 +1,6 @@
 import pygame
 
-# Função de geração de texto (com suporte a lista, itálico, negrito, sublinhado e espaçamento)
+# Função de geração de texto com suporte a lista, itálico, negrito, sublinhado, espaçamento e contorno
 def texto (
     conteudo,
     cor,
@@ -13,10 +13,19 @@ def texto (
     negrito = False,
     italico = False,
     sublinhado = False,
-    espacamento = None
+    espacamento = None,
+    grossura_contorno = None,
+    cor_contorno = None
 ):
     if isinstance (cor, str):
         cor = pygame.Color (cor)
+
+    if grossura_contorno is not None and cor_contorno is None:
+        cor_contorno = (0, 0, 0)
+    if cor_contorno is not None and grossura_contorno is None:
+        grossura_contorno = 1
+    if isinstance (cor_contorno, str):
+        cor_contorno = pygame.Color (cor_contorno)
 
     fonte_pygame = pygame.font.SysFont (fonte, tamanho, bold = negrito, italic = italico)
     fonte_pygame.set_underline (sublinhado)
@@ -28,8 +37,9 @@ def texto (
         espacamento = tamanho
 
     for i in range (len (conteudo)):
-        superficie = fonte_pygame.render (conteudo[i], True, cor)
-        ret = superficie.get_rect ()
+        texto_original = conteudo[i]
+        superficie_principal = fonte_pygame.render (texto_original, True, cor)
+        ret = superficie_principal.get_rect ()
 
         y_linha = y + i * espacamento
 
@@ -48,4 +58,12 @@ def texto (
         else:
             ret.topleft = (x, y_linha)
 
-        tela.blit (superficie, ret)
+        if grossura_contorno:
+            for dx in range (-grossura_contorno, grossura_contorno + 1):
+                for dy in range (-grossura_contorno, grossura_contorno + 1):
+                    if dx == 0 and dy == 0:
+                        continue
+                    sombra = fonte_pygame.render (texto_original, True, cor_contorno)
+                    tela.blit (sombra, (ret.x + dx, ret.y + dy))
+
+        tela.blit (superficie_principal, ret)

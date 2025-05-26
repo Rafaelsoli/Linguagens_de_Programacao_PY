@@ -8,8 +8,6 @@ largura_coluna = 20
 altura_linha = 20
 caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-# BUG: O SLIDE MORRE SE REDIMENSIONADO AQUI
-
 def iniciar():
     global colunas, velocidades
     colunas.clear()
@@ -23,11 +21,19 @@ def iniciar():
         colunas.append(y_inicial)
         velocidades.append(random.randint(3, 7))
 
-def atualizar(tela):
-    largura, altura = tela.get_size()
+def atualizar (tela):
+    largura, altura = tela.get_size ()
     num_colunas = largura // largura_coluna
 
-    tela.fill((0, 0, 0))  # fundo preto
+    while len(colunas) < num_colunas:
+        colunas.append(random.randint(-500, 0))
+        velocidades.append(random.randint(3, 7))
+
+    while len(colunas) > num_colunas:
+        colunas.pop()
+        velocidades.pop()
+
+    tela.fill((0, 0, 0))
     fonte = pygame.font.SysFont("consolas", 20)
     cor_matrix = (0, 255, 70)
 
@@ -38,6 +44,7 @@ def atualizar(tela):
         for j in range(0, altura, altura_linha):
             if y + j < 0:
                 continue
+
             char = random.choice(caracteres)
             texto = fonte.render(char, True, cor_matrix)
             tela.blit(texto, (x, y + j))
@@ -47,6 +54,7 @@ def atualizar(tela):
         if colunas[i] > altura:
             colunas[i] = random.randint(-500, -50)
             velocidades[i] = random.randint(3, 7)
+
 
 def evento(evento):
     pass
