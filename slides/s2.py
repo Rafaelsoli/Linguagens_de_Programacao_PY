@@ -1,45 +1,94 @@
 import pygame
 from slides.modulos.retangulo import retangulo
-from slides.modulos.imagem import imagem
-from slides.modulos.texto  import texto
+from slides.modulos.imagem   import imagem
+from slides.modulos.texto    import texto
 from slides.modulos.circulo  import circulo
 
-def iniciar ():
+BASE_W, BASE_H = 1920, 1080  # resolução de referência
+
+def iniciar():
+    pygame.init()
+    tela = pygame.display.set_mode((BASE_W, BASE_H), pygame.RESIZABLE)
+    pygame.display.set_caption("Paradigmas")
+    return tela
+
+def evento(ev):
     pass
 
-def evento (evento):
-    pass
+def atualizar(tela):
+    tela.fill((0xF1, 0xF1, 0xF1))
+    w, h = tela.get_size()
+    scale = min(w / BASE_W, h / BASE_H)
 
-def atualizar (tela):
-    tela.fill ((0xf1, 0xf1, 0xf1)) 
-    largura, altura = tela.get_size ()
-    cx, cy = largura // 2, altura // 2
+    # ------------------ TÍTULO ------------------
+    title_font = max(26, int(79 * scale))
+    texto("3. Paradigmas", "#000000", title_font, "arial",
+          int(100 * scale), int(50 * scale), "top_esquerda", tela, negrito=True)
 
-    texto ("3. Paradigmas", "#000000", 79, "arial", 100, 50, "top_esquerda", tela, negrito=True)
-    retangulo ((0x00, 0x00, 0x00), 350, 2, 80, 140, "top_esquerda", 2, tela)
+    # ------------------ RETÂNGULO ----------------
+    retangulo((0, 0, 0),
+              int(350 * scale), int(2 * scale),
+              int(80 * scale), int(140 * scale),
+              "top_esquerda", 2, tela)
 
-    imagem ("detalhe.png", largura, 0, "top_direita", tela, (300, 300))
+    # ------------------- IMAGEM ------------------
+    img_size = int(300 * scale)
+    imagem("detalhe.png", w, 0, "top_direita", tela, (img_size, img_size))
 
-    texto (
-        ["Python é uma linguagem multiparadigma, ou seja, permite programar de diferentes formas de acordo com a",
-         "necessidade do projeto. Essa flexibilidade torna a linguagem mais versátil e poderosa para resolver variados",
-         "tipos de problemas."
-         ],
-           "#000000", 26, "arial", 100, 160, "top_esquerda", tela, espacamento=37
+    # ------------------ PARÁGRAFO 1 ------------------
+    text_font = max(14, int(26 * scale))
+    espacamento_1 = int(37 * scale)
+    texto(
+        [
+            "Python é uma linguagem multiparadigma, ou seja, permite programar de diferentes formas de acordo com a",
+            "necessidade do projeto. Essa flexibilidade torna a linguagem mais versátil e poderosa para resolver variados",
+            "tipos de problemas."
+        ],
+        "#000000", text_font, "arial",
+        int(100 * scale), int(160 * scale),
+        "top_esquerda", tela, espacamento=espacamento_1
     )
 
-    texto (
-        ["● Paradigma Procedural", 
-         "● Paradigma Orientado a Objetos (POO)", 
-         "● Paradigma Funcional"
-         ],
-           "#000000", 26, "arial", 130, 300, "top_esquerda", tela, negrito=True, espacamento=70
+    # --------------- LISTA DE PARADIGMAS ----------------
+    espacamento_lista = int(70 * scale)
+    texto(
+        [
+            "● Paradigma Procedural",
+            "● Paradigma Orientado a Objetos (POO)",
+            "● Paradigma Funcional"
+        ],
+        "#000000", text_font, "arial",
+        int(130 * scale), int(300 * scale),
+        "top_esquerda", tela, negrito=True, espacamento=espacamento_lista
     )
 
-
-    texto (
-        ["O desenvolvedor pode escolher o estilo mais adequado ao problema, ou até combinar paradigmas no mesmo",
-         "projeto."
-         ],
-           "#000000", 26, "arial", 100, 500, "top_esquerda", tela, espacamento=37
+    # ---------------- PARÁGRAFO FINAL ------------------
+    texto(
+        [
+            "O desenvolvedor pode escolher o estilo mais adequado ao problema, ou até combinar paradigmas no mesmo",
+            "projeto."
+        ],
+        "#000000", text_font, "arial",
+        int(100 * scale), int(500 * scale),
+        "top_esquerda", tela, espacamento=espacamento_1
     )
+
+# ----------- LOOP PRINCIPAL ---------------------
+if __name__ == "__main__":
+    tela = iniciar()
+    clock = pygame.time.Clock()
+    rodando = True
+
+    while rodando:
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT:
+                rodando = False
+            elif ev.type == pygame.VIDEORESIZE:
+                tela = pygame.display.set_mode(ev.size, pygame.RESIZABLE)
+            evento(ev)
+
+        atualizar(tela)
+        pygame.display.flip()
+        clock.tick(60)
+
+    pygame.quit()

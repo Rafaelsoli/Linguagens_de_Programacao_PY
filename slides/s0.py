@@ -4,13 +4,13 @@ from slides.modulos.imagem   import imagem
 from slides.modulos.texto    import texto
 
 # resolução de referência: ajuste se preferir
-BASE_W, BASE_H = 1280, 720
+BASE_W, BASE_H = 1920, 1080
 
 def iniciar():
     """Inicialize a janela como redimensionável."""
     pygame.init()
     tela = pygame.display.set_mode((BASE_W, BASE_H), pygame.RESIZABLE)
-    pygame.display.set_caption("Slide responsiva")
+    pygame.display.set_caption("Capa")
     return tela
 
 def atualizar(tela):

@@ -1,52 +1,91 @@
 import pygame
 from slides.modulos.retangulo import retangulo
-from slides.modulos.imagem import imagem
-from slides.modulos.texto  import texto
+from slides.modulos.imagem   import imagem
+from slides.modulos.texto    import texto
 from slides.modulos.circulo  import circulo
 
-def iniciar ():
-    pass
+BASE_W, BASE_H = 1920, 1080  # resolução base de referência
 
-def evento (evento):
-    pass
+def iniciar():
+    pygame.init()
+    tela = pygame.display.set_mode((BASE_W, BASE_H), pygame.RESIZABLE)
+    pygame.display.set_caption("Índice")
+    return tela
 
-def atualizar (tela):
-    tela.fill ((0xf1, 0xf1, 0xf1))
-    largura, altura = tela.get_size ()
-    cx, cy = largura // 2, altura // 2
+def evento(ev):
+    pass  # pode adicionar interações aqui
 
-    texto ("Índice", "#000000", 79, "arial", 100, 50, "top_esquerda", tela, negrito=True)
-    retangulo ((0x00, 0x00, 0x00), 350, 2, 80, 140, "top_esquerda", 2, tela)
+def atualizar(tela):
+    tela.fill((0xF1, 0xF1, 0xF1))
+    w, h = tela.get_size()
+    scale = min(w / BASE_W, h / BASE_H)
 
-    texto (
-        ["01", 
-         "02", 
-         "03", 
-         "04", 
-         "05", 
-         "06", 
-         "07", 
-         "08", 
-         "09",
-         ],
-           "#000000", 26, "arial", 100, 160, "top_esquerda", tela, negrito=True, espacamento=37
+    # ------------------ TÍTULO ------------------
+    title_font = max(26, int(79 * scale))
+    texto("Índice", "#000000", title_font, "arial",
+          int(100 * scale), int(50 * scale), "top_esquerda", tela, negrito=True)
+
+    # ----------------- RETÂNGULO ----------------
+    ret_x = int(350 * scale)
+    ret_y = int(2 * scale)
+    ret_w = int(80 * scale)
+    ret_h = int(140 * scale)
+    retangulo((0, 0, 0), ret_x, ret_y, ret_w, ret_h,
+              "top_esquerda", 2, tela)
+
+    # --------------- NUMERAÇÃO ------------------
+    num_font = max(12, int(26 * scale))
+    espacamento = int(37 * scale)
+    texto(
+        ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
+        "#000000", num_font, "arial",
+        int(100 * scale), int(160 * scale),
+        "top_esquerda", tela, negrito=True, espacamento=espacamento
     )
 
-    texto (
-        ["INTRODUÇÃO",
-         "HISTÓRICO DA LINGUAGEM",
-         "PARADIGMAS",
-         "CARACTERÍSTICAS MARCANTES",
-         "APLICAÇÕES",
-         "LINGUAGENS RELACIONADAS",
-         "EXEMPLOS",
-         "CONSIDERAÇÕES FINAIS",
-         "BIBLIOGRAFIA"
-         ],
-           "#000000", 26, "arial", 160, 160, "top_esquerda", tela, espacamento=37
+    # ---------- TÍTULOS DAS SEÇÕES --------------
+    texto(
+        [
+            "INTRODUÇÃO",
+            "HISTÓRICO DA LINGUAGEM",
+            "PARADIGMAS",
+            "CARACTERÍSTICAS MARCANTES",
+            "APLICAÇÕES",
+            "LINGUAGENS RELACIONADAS",
+            "EXEMPLOS",
+            "CONSIDERAÇÕES FINAIS",
+            "BIBLIOGRAFIA"
+        ],
+        "#000000", num_font, "arial",
+        int(160 * scale), int(160 * scale),
+        "top_esquerda", tela, espacamento=espacamento
     )
-    
-    imagem ("lupa.png", largura, 0, "top_direita", tela, (altura/3, altura/2))
 
-    circulo ((0x00, 0x00, 0x00), 200, 200, altura + 100, "centro", 8, tela)
-    circulo ((0x00, 0x00, 0x00), 150, 200, altura + 100, "centro", 8, tela)
+    # ------------------ IMAGEM ------------------
+    img_w = int(h / 3)
+    img_h = int(h / 2)
+    imagem("lupa.png", w, 0, "top_direita", tela, (img_w, img_h))
+
+    # ------------------ CÍRCULOS -----------------
+    circulo((0, 0, 0), int(200 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela)
+    circulo((0, 0, 0), int(150 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela)
+
+# ----------- LOOP PRINCIPAL ---------------------
+if __name__ == "__main__":
+    tela = iniciar()
+    clock = pygame.time.Clock()
+    rodando = True
+
+    while rodando:
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT:
+                rodando = False
+            elif ev.type == pygame.VIDEORESIZE:
+                tela = pygame.display.set_mode(ev.size, pygame.RESIZABLE)
+            evento(ev)
+
+        atualizar(tela)
+        pygame.display.flip()
+        clock.tick(60)
+
+    pygame.quit()
