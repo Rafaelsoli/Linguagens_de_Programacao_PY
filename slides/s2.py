@@ -1,0 +1,21 @@
+import pygame
+from slides.modulos.retangulo import retangulo
+from slides.modulos.imagem import imagem
+from slides.modulos.texto  import texto
+from slides.modulos.circulo  import circulo
+
+def iniciar ():
+    pass
+
+def evento (evento):
+    pass
+
+def atualizar (tela):
+    tela.fill ((0xf1, 0xf1, 0xf1)) 
+    largura, altura = tela.get_size ()
+    cx, cy = largura // 2, altura // 2
+
+    texto ("3. Paradigmas", "#000000", 79, "arial", 100, 50, "top_esquerda", tela, negrito=True)
+    retangulo ((0x00, 0x00, 0x00), 350, 2, 80, 140, "top_esquerda", 2, tela)
+
+    imagem ("detalhe.png", largura, 0, "top_direita", tela, (altura/3, altura/2))
