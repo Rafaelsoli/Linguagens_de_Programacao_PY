@@ -138,9 +138,9 @@ while executando:
             tela = pygame.display.set_mode ((largura, altura), pygame.RESIZABLE)
         elif evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_RIGHT:
-                trocarSlide (transicaoArrastar, indice_slide + 1)
+                trocarSlide (transicaoNenhuma, indice_slide + 1)
             elif evento.key == pygame.K_LEFT:
-                trocarSlide (transicaoArrastar, indice_slide - 1)
+                trocarSlide (transicaoNenhuma, indice_slide - 1)
             elif evento.key == pygame.K_F11:
                 tela_cheia = not tela_cheia
                 if tela_cheia:

@@ -18,4 +18,4 @@ def atualizar (tela):
     texto ("3. Paradigmas", "#000000", 79, "arial", 100, 50, "top_esquerda", tela, negrito=True)
     retangulo ((0x00, 0x00, 0x00), 350, 2, 80, 140, "top_esquerda", 2, tela)
 
-    imagem ("detalhe.png", largura, 0, "top_direita", tela, (altura/3, altura/2))
+    imagem ("detalhe.png", largura, 0, "top_direita", tela, (altura/4, altura/4))
