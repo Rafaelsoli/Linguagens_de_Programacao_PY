@@ -4,7 +4,7 @@ from slides.modulos.imagem   import imagem
 from slides.modulos.texto    import texto
 
 # resolução de referência: ajuste se preferir
-BASE_W, BASE_H = 1920, 1080
+BASE_W, BASE_H = 1280, 720
 
 def iniciar():
     """Inicialize a janela como redimensionável."""

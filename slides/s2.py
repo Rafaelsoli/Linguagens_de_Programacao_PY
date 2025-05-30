@@ -4,7 +4,7 @@ from slides.modulos.imagem   import imagem
 from slides.modulos.texto    import texto
 from slides.modulos.circulo  import circulo
 
-BASE_W, BASE_H = 1920, 1080  # resolução de referência
+BASE_W, BASE_H = 1280, 720  # resolução de referência
 
 def iniciar():
     pygame.init()
