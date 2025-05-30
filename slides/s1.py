@@ -67,23 +67,3 @@ def atualizar(tela):
     # ------------------ CÍRCULOS -----------------
     circulo((0, 0, 0), int(200 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela)
     circulo((0, 0, 0), int(150 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela)
-
-# ----------- LOOP PRINCIPAL ---------------------
-if __name__ == "__main__":
-    tela = iniciar()
-    clock = pygame.time.Clock()
-    rodando = True
-
-    while rodando:
-        for ev in pygame.event.get():
-            if ev.type == pygame.QUIT:
-                rodando = False
-            elif ev.type == pygame.VIDEORESIZE:
-                tela = pygame.display.set_mode(ev.size, pygame.RESIZABLE)
-            evento(ev)
-
-        atualizar(tela)
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()

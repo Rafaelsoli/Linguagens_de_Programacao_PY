@@ -2,7 +2,6 @@ import pygame
 from slides.modulos.retangulo import retangulo
 from slides.modulos.imagem   import imagem
 from slides.modulos.texto    import texto
-from slides.modulos.circulo  import circulo
 
 BASE_W, BASE_H = 1280, 720  # resolução de referência
 
@@ -52,7 +51,7 @@ def atualizar(tela):
     texto(
         [
             "● Paradigma Procedural",
-            "● Paradigma Orientado a Objetos (POO)",
+            "● Paradigma Orientado a Objetos (POO)", 
             "● Paradigma Funcional"
         ],
         "#000000", text_font, "arial",
@@ -70,23 +69,3 @@ def atualizar(tela):
         int(100 * scale), int(500 * scale),
         "top_esquerda", tela, espacamento=espacamento_1
     )
-
-# ----------- LOOP PRINCIPAL ---------------------
-if __name__ == "__main__":
-    tela = iniciar()
-    clock = pygame.time.Clock()
-    rodando = True
-
-    while rodando:
-        for ev in pygame.event.get():
-            if ev.type == pygame.QUIT:
-                rodando = False
-            elif ev.type == pygame.VIDEORESIZE:
-                tela = pygame.display.set_mode(ev.size, pygame.RESIZABLE)
-            evento(ev)
-
-        atualizar(tela)
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()

@@ -7,9 +7,11 @@ from slides.modulos.texto    import texto
 BASE_W, BASE_H = 1280, 720
 
 def iniciar():
-    """Inicialize a janela como redimensionável."""
     pygame.init()
     pygame.display.set_caption("Capa")
+
+def evento(ev):
+    pass
 
 def atualizar(tela):
     w, h = tela.get_size()
@@ -25,12 +27,11 @@ def atualizar(tela):
            "top_esquerda", tela, logo_size)
 
     # --------------------- MOLDURA -------------------------
-    margin_x = int(w * 0.05)
-    top_y    = int(h * 0.10)
-    rect_w   = w - 2 * margin_x
-    rect_h   = int(h * 0.18)
-    retangulo((0, 0, 0),
-              margin_x, top_y, rect_w, rect_h,
+    ret_x = int(350 * scale)
+    ret_y = int(2 * scale)
+    ret_w = int(80 * scale)
+    ret_h = int(140 * scale)
+    retangulo((0, 0, 0), ret_x, 2, w - ret_x, ret_h,
               "top_esquerda", 2, tela)
 
     # --------------------- TÍTULO --------------------------
@@ -57,28 +58,3 @@ def atualizar(tela):
           authors_font, "arial",
           w // 2, h - int(h * 0.08),
           "centro", tela)
-
-def evento(ev):
-    """Você pode interceptar outros eventos aqui se precisar."""
-    pass
-
-# ---------- LOOP PRINCIPAL DE EXEMPLO ----------
-if __name__ == "__main__":
-    tela = iniciar()
-    clock = pygame.time.Clock()
-
-    rodando = True
-    while rodando:
-        for ev in pygame.event.get():
-            if ev.type == pygame.QUIT:
-                rodando = False
-            elif ev.type == pygame.VIDEORESIZE:
-                # adapta a tela ao novo tamanho
-                tela = pygame.display.set_mode(ev.size, pygame.RESIZABLE)
-            evento(ev)
-
-        atualizar(tela)
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()
