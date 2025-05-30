@@ -6,7 +6,7 @@ from slides.modulos.texto  import texto
 
 pygame.init ()
 
-largura, altura = 800, 600
+largura, altura = 1280, 720
 tela = pygame.display.set_mode ((largura, altura), pygame.RESIZABLE)
 pygame.display.set_caption ("Apresentação em Python")
 relogio = pygame.time.Clock ()

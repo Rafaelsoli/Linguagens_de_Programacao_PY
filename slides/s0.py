@@ -9,9 +9,7 @@ BASE_W, BASE_H = 1920, 1080
 def iniciar():
     """Inicialize a janela como redimensionável."""
     pygame.init()
-    tela = pygame.display.set_mode((BASE_W, BASE_H), pygame.RESIZABLE)
     pygame.display.set_caption("Capa")
-    return tela
 
 def atualizar(tela):
     w, h = tela.get_size()

@@ -8,9 +8,7 @@ BASE_W, BASE_H = 1920, 1080  # resolução base de referência
 
 def iniciar():
     pygame.init()
-    tela = pygame.display.set_mode((BASE_W, BASE_H), pygame.RESIZABLE)
     pygame.display.set_caption("Índice")
-    return tela
 
 def evento(ev):
     pass  # pode adicionar interações aqui

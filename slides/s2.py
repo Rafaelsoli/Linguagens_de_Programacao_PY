@@ -8,9 +8,7 @@ BASE_W, BASE_H = 1920, 1080  # resolução de referência
 
 def iniciar():
     pygame.init()
-    tela = pygame.display.set_mode((BASE_W, BASE_H), pygame.RESIZABLE)
     pygame.display.set_caption("Paradigmas")
-    return tela
 
 def evento(ev):
     pass
