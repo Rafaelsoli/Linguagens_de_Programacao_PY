@@ -157,14 +157,16 @@ while executando:
     if slides:
         slides[indice_slide].atualizar (tela)
 
-        if not isinstance (slides[indice_slide], SlideFinal):
-            texto ( # Indice no slide
-                f"{indice_slide + 1}", 
-                "#FFFFFF", 24, "arial", largura - 10, altura - 10, "baixo_direita", tela,
-                negrito=True,
-                grossura_contorno=3,
-                cor_contorno="#000000"
-            )
+
+        ### INDICE
+        #if not isinstance (slides[indice_slide], SlideFinal):
+        #    texto ( # Indice no slide
+        #        f"{indice_slide + 1}", 
+        #        "#FFFFFF", 24, "arial", largura - 10, altura - 10, "baixo_direita", tela,
+        #        negrito=True,
+        #        grossura_contorno=3,
+        #        cor_contorno="#000000"
+        #    )
 
 
     pygame.display.flip ()

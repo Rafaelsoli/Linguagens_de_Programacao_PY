@@ -19,3 +19,11 @@ def atualizar (tela):
     retangulo ((0x00, 0x00, 0x00), 350, 2, 80, 140, "top_esquerda", 2, tela)
 
     imagem ("detalhe.png", largura, 0, "top_direita", tela, (altura/4, altura/4))
+
+    texto (
+        [" Python é uma linguagem multiparadigma, ou seja, permite programar de diferentes formas de acordo com",
+         " a necessidade do projeto. Essa flexibilidade torna a linguagem mais versátil e poderosa para resolver variados",
+         " tipos de problemas."
+         ],
+           "#000000", 26, "arial", 100, 160, "top_esquerda", tela, espacamento=37
+    )
