@@ -1,6 +1,5 @@
 import importlib
 import pygame
-import os
 
 from slides.modulos.texto  import texto
 
@@ -16,15 +15,26 @@ class SlideFinal:
     def iniciar (self):
         pass
 
-    def atualizar (self, tela):
-        tela.fill ((0, 0, 0))
-        fonte = pygame.font.SysFont (None, 60)
-        texto = fonte.render ("fim da apresentação", True, (255, 255, 255))
-        ret = texto.get_rect (center = tela.get_rect ().center)
-        tela.blit (texto, ret)
+    def atualizar(self, tela, estado, progresso_transicao):
+        tela.fill((0, 0, 0))
+        texto(
+            "fim da apresentação",
+            cor=(255, 255, 255),
+            tamanho=60,
+            fonte="arial",
+            x=tela.get_width() // 2,
+            y=tela.get_height() // 2,
+            alinhamento="centro",
+            tela=tela,
+            estado_transicao=estado.lower(),
+            progresso_transicao=progresso_transicao
+        )
 
     def evento (self, evento):
-        pass
+        if evento.type == pygame.KEYDOWN:
+            if transicao_pendente is None:
+                if evento.key == pygame.K_RETURN: # Pressionar ENTER no slide final finaliza a apresentação
+                    pygame.quit ()
 
 def carregarSlides ():
     slides = []
@@ -88,8 +98,8 @@ def animarTransicao (slide_antigo, slide_novo, direcao):
         superficie_antiga = pygame.Surface ((largura, altura))
         superficie_nova = pygame.Surface ((largura, altura))
 
-        slide_antigo.atualizar (superficie_antiga)
-        slide_novo.atualizar (superficie_nova)
+        slide_antigo.atualizar (superficie_antiga, "Saida")
+        slide_novo.atualizar (superficie_nova, "Entrada")
 
         tela.blit (superficie_antiga, (x_antigo, y_antigo))
         tela.blit (superficie_nova, (x_novo, y_novo))
@@ -129,6 +139,12 @@ if slides:
     slides[indice_slide].iniciar ()
 
 executando = True
+
+
+transicao_pendente = None
+tempo_inicio_transicao = 0
+delay_transicao = 500  # em milissegundos (1 segundo)
+
 while executando:
     for evento in pygame.event.get ():
         if evento.type == pygame.QUIT:
@@ -137,17 +153,20 @@ while executando:
             largura, altura = evento.size
             tela = pygame.display.set_mode ((largura, altura), pygame.RESIZABLE)
         elif evento.type == pygame.KEYDOWN:
-            if evento.key == pygame.K_RIGHT:
-                trocarSlide (transicaoNenhuma, indice_slide + 1)
-            elif evento.key == pygame.K_LEFT:
-                trocarSlide (transicaoNenhuma, indice_slide - 1)
-            elif evento.key == pygame.K_F11:
+            if transicao_pendente is None:
+                if evento.key == pygame.K_RIGHT:
+                    transicao_pendente = ("direita", indice_slide + 1)
+                    tempo_inicio_transicao = pygame.time.get_ticks ()
+                elif evento.key == pygame.K_LEFT:
+                    transicao_pendente = ("esquerda", indice_slide - 1)
+                    tempo_inicio_transicao = pygame.time.get_ticks ()
+
+            if evento.key == pygame.K_F11:
                 tela_cheia = not tela_cheia
                 if tela_cheia:
                     tela = pygame.display.set_mode ((0, 0), pygame.FULLSCREEN)
                 else:
                     tela = pygame.display.set_mode ((largura, altura), pygame.RESIZABLE)
-
 
         if slides:
             slides[indice_slide].evento (evento)
@@ -155,7 +174,38 @@ while executando:
     tela.fill ((30, 30, 30))
 
     if slides:
-        slides[indice_slide].atualizar (tela)
+        progresso_transicao = 1.0  # padrão
+
+        if transicao_pendente is not None:
+            agora = pygame.time.get_ticks()
+            tempo_decorrido = agora - tempo_inicio_transicao
+            if tempo_decorrido < delay_transicao:
+                estado_slide = "Saida"
+                progresso_transicao = tempo_decorrido / delay_transicao
+            else:
+                direcao, novo_indice = transicao_pendente
+                trocarSlide(transicaoNenhuma, novo_indice)
+                transicao_pendente = None
+                estado_slide = "Entrada"
+                tempo_inicio_transicao = pygame.time.get_ticks()
+                progresso_transicao = 0.0
+        else:
+            agora = pygame.time.get_ticks()
+            if tempo_inicio_transicao > 0:
+                tempo_decorrido = agora - tempo_inicio_transicao
+                if tempo_decorrido < delay_transicao:
+                    estado_slide = "Entrada"
+                    progresso_transicao = tempo_decorrido / delay_transicao
+                else:
+                    estado_slide = "Meio"
+                    progresso_transicao = 1.0
+            else:
+                estado_slide = "Meio"
+                progresso_transicao = 1.0
+
+        slides[indice_slide].atualizar(tela, estado_slide, progresso_transicao)
+
+
 
 
         ### INDICE
@@ -168,6 +218,12 @@ while executando:
         #        cor_contorno="#000000"
         #    )
 
+    #if transicao_pendente is not None:
+    #    agora = pygame.time.get_ticks ()
+    #    if agora - tempo_inicio_transicao >= delay_transicao:
+    #        direcao, novo_indice = transicao_pendente
+    #        trocarSlide (transicaoNenhuma, novo_indice)
+    #        transicao_pendente = None
 
     pygame.display.flip ()
     relogio.tick (60)

@@ -12,7 +12,7 @@ def iniciar():
 def evento(ev):
     pass
 
-def atualizar(tela):
+def atualizar(tela, estado, progresso):
     tela.fill((0xF1, 0xF1, 0xF1))
     w, h = tela.get_size()
     scale = min(w / BASE_W, h / BASE_H)
@@ -20,17 +20,18 @@ def atualizar(tela):
     # ------------------ TÍTULO ------------------
     title_font = max(26, int(79 * scale))
     texto("3. Paradigmas", "#000000", title_font, "arial",
-          int(100 * scale), int(50 * scale), "top_esquerda", tela, negrito=True)
+          int(100 * scale), int(50 * scale), "top_esquerda", tela, negrito=True,
+          estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout")
 
     # ------------------ RETÂNGULO ----------------
     retangulo((0, 0, 0),
               int(350 * scale), int(2 * scale),
               int(80 * scale), int(140 * scale),
-              "top_esquerda", 2, tela)
+              "top_esquerda", 2, tela, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="sobe", transicao_saida="desce")
 
     # ------------------- IMAGEM ------------------
     img_size = int(300 * scale)
-    imagem("detalhe.png", w, 0, "top_direita", tela, (img_size, img_size))
+    imagem("detalhe.png", w, 0, "top_direita", tela, (img_size, img_size), estado_transicao=estado, progresso_transicao=progresso)
 
     # ------------------ PARÁGRAFO 1 ------------------
     text_font = max(14, int(26 * scale))
@@ -43,7 +44,7 @@ def atualizar(tela):
         ],
         "#000000", text_font, "arial",
         int(100 * scale), int(160 * scale),
-        "top_esquerda", tela, espacamento=espacamento_1
+        "top_esquerda", tela, espacamento=espacamento_1, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="sobe", transicao_saida="desce"
     )
 
     # --------------- LISTA DE PARADIGMAS ----------------
@@ -56,7 +57,7 @@ def atualizar(tela):
         ],
         "#000000", text_font, "arial",
         int(130 * scale), int(300 * scale),
-        "top_esquerda", tela, negrito=True, espacamento=espacamento_lista
+        "top_esquerda", tela, negrito=True, espacamento=espacamento_lista, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout"
     )
 
     # ---------------- PARÁGRAFO FINAL ------------------
@@ -67,5 +68,5 @@ def atualizar(tela):
         ],
         "#000000", text_font, "arial",
         int(100 * scale), int(500 * scale),
-        "top_esquerda", tela, espacamento=espacamento_1
+        "top_esquerda", tela, espacamento=espacamento_1, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="desce", transicao_saida="sobe"
     )

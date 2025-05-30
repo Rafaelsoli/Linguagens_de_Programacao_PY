@@ -13,7 +13,7 @@ def iniciar():
 def evento(ev):
     pass  # pode adicionar interações aqui
 
-def atualizar(tela):
+def atualizar(tela, estado, progresso):
     tela.fill((0xF1, 0xF1, 0xF1))
     w, h = tela.get_size()
     scale = min(w / BASE_W, h / BASE_H)
@@ -21,15 +21,17 @@ def atualizar(tela):
     # ------------------ TÍTULO ------------------
     title_font = max(26, int(79 * scale))
     texto("Índice", "#000000", title_font, "arial",
-          int(100 * scale), int(50 * scale), "top_esquerda", tela, negrito=True)
+          int(100 * scale), int(50 * scale), "top_esquerda", tela, negrito=True,
+          estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout"
+        )
 
-    # ----------------- RETÂNGULO ----------------
+    # ----------------- LINHA --------------------
     ret_x = int(350 * scale)
     ret_y = int(2 * scale)
     ret_w = int(80 * scale)
     ret_h = int(140 * scale)
     retangulo((0, 0, 0), ret_x, ret_y, ret_w, ret_h,
-              "top_esquerda", 2, tela)
+              "top_esquerda", 2, tela, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="sobe", transicao_saida="desce")
 
     # --------------- NUMERAÇÃO ------------------
     num_font = max(12, int(26 * scale))
@@ -38,7 +40,7 @@ def atualizar(tela):
         ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
         "#000000", num_font, "arial",
         int(100 * scale), int(160 * scale),
-        "top_esquerda", tela, negrito=True, espacamento=espacamento
+        "top_esquerda", tela, negrito=True, espacamento=espacamento, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout"
     )
 
     # ---------- TÍTULOS DAS SEÇÕES --------------
@@ -56,14 +58,14 @@ def atualizar(tela):
         ],
         "#000000", num_font, "arial",
         int(160 * scale), int(160 * scale),
-        "top_esquerda", tela, espacamento=espacamento
+        "top_esquerda", tela, espacamento=espacamento, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout"
     )
 
     # ------------------ IMAGEM ------------------
     img_w = int(h / 3)
     img_h = int(h / 2)
-    imagem("lupa.png", w, 0, "top_direita", tela, (img_w, img_h))
+    imagem("lupa.png", w, 0, "top_direita", tela, (img_w, img_h), estado_transicao=estado, progresso_transicao=progresso)
 
     # ------------------ CÍRCULOS -----------------
-    circulo((0, 0, 0), int(200 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela)
-    circulo((0, 0, 0), int(150 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela)
+    circulo((0, 0, 0), int(200 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout")
+    circulo((0, 0, 0), int(150 * scale), int(200 * scale), h + int(100 * scale), "centro", 8, tela, estado_transicao=estado, progresso_transicao=progresso, transicao_entrada="fadein", transicao_saida="fadeout")
