@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot Gemini sobre Python</title>
+    <link rel="stylesheet" href="/static/style.css">
+ 
+<body>
+    <div class="chat-container">
+        <h1><img src="{{ url_for('static', filename='robo.png') }}" alt="Robô" width="50"> Chatbot Jeremias</h1>
+        <div id="chat"></div>
+        <input type="text" id="pergunta" placeholder="Digite sua pergunta...">
+        <button onclick="enviarPergunta()">Enviar</button>
+    </div>
+
+    <script>
+        async function enviarPergunta() {
+            const input = document.getElementById("pergunta");
+            const pergunta = input.value;
+            input.value = "";
+    
+            const chat = document.getElementById("chat");
+            chat.innerHTML += `<p><strong>Você:</strong> ${pergunta}</p>`;
+    
+            const resposta = await fetch("/perguntar", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pergunta: pergunta })
+            }).then(res => res.json());
+    
+            chat.innerHTML += `<p><strong>Jeremias:</strong> ${resposta.resposta}</p>`;
+        }
+    </script>
+    
+</body>
+</html>
