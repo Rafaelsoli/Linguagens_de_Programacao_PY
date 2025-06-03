@@ -51,7 +51,7 @@ def receberComando ():
         return "Comando inválido", 400
 
 def iniciarServidor ():
-    app.run (host="0.0.0.0", port=5000)
+    app.run (host="0.0.0.0", port=5002)
 
 def desenharFundo (tela):
     for y in range (600):

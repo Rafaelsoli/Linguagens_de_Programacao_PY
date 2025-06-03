@@ -39,7 +39,7 @@ def redimensionarCentralizar (imagem_original, tamanho_janela):
     return superficie
 
 def iniciarServidor ():
-    app.run (host="0.0.0.0", port=5000)
+    app.run (host="0.0.0.0", port=5001)
 
 @app.route ("/comando", methods=["POST"])
 def receberComando ():
